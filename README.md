@@ -46,3 +46,36 @@ This tool is for building intuition about cosmic scale and time, not for making 
 ## 📁 Files
 
 - `index.html` — self-contained visualization, no dependencies
+
+## 📋 TODO
+
+### High Priority (Scientific Accuracy)
+- Add separate filter for multicellular life emergence (happens after simple life)
+- Split "intelligence" into cognitive ability vs tool-using capability
+- Add parameter for % of intelligent species that develop detectable technology
+- Replace single "civilization window" with distribution (min/avg/max lifespan)
+- Weight star formation history (most habitable planets formed ~5B years ago, not uniformly)
+- Add galactic habitable zone filter (exclude galactic center due to radiation)
+- Add metallicity requirement filter (early universe stars couldn't support rocky planets)
+
+### Medium Priority (Detection Model)
+- Replace distance-based contact probability with signal strength model (inverse square law)
+- Add "broadcasting vs listening" asymmetry (civilizations might detect without transmitting)
+- Add detection threshold parameter (minimum signal strength we can detect)
+- Show detection probability separately for radio, optical, infrared
+- Add Kardashev scale consideration (Type II/III civs would be easier to detect)
+
+### Low Priority (UX/Features)
+- Add "Advanced Mode" toggle to show/hide additional parameters
+- Add uncertainty ranges to all calculations (show min/max bounds)
+- Add comparison to published estimates (SETI, Sandberg et al., etc.)
+- Add timeline view showing when civilizations might have existed
+- Add export functionality (save parameters/screenshot)
+- Add educational tooltips explaining each filter
+- Add references/citations panel
+
+### Nice to Have
+- Add self-destruction probability parameter
+- Model directed panspermia scenarios
+- Add relativistic travel time calculations
+- Show communication lag time for two-way conversation
