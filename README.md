@@ -26,6 +26,9 @@ Even with millions of civilizations throughout galaxy history, very few exist *a
 
 Our radio signals have traveled only ~100 light-years since the 1920s.
 
+## Demo
+[https://maksimkunaev.github.io/civilizations/](https://maksimkunaev.github.io/civilizations/)
+
 ## Usage
 
 Open `index.html` in browser. Adjust sliders or use presets (Pessimistic / Baseline / Optimistic).
