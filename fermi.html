@@ -35,7 +35,7 @@
 
         .layout {
             display: grid;
-            grid-template-columns: 300px 1fr;
+            grid-template-columns: 320px 1fr;
             height: 100vh;
         }
 
@@ -44,12 +44,15 @@
                 grid-template-columns: 1fr;
                 grid-template-rows: auto 1fr;
             }
+
+            .panel {
+                max-height: 50vh;
+            }
         }
 
-        /* Left Panel */
         .panel {
             background: var(--bg-surface);
-            padding: 24px;
+            padding: 20px;
             border-right: 1px solid rgba(255, 255, 255, 0.05);
             overflow-y: auto;
             display: flex;
@@ -62,17 +65,48 @@
             text-transform: uppercase;
             letter-spacing: 0.15em;
             color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .presets {
+            display: flex;
+            gap: 6px;
             margin-bottom: 20px;
+        }
+
+        .preset-btn {
+            flex: 1;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            padding: 8px 6px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preset-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .preset-btn.active {
+            background: rgba(0, 240, 255, 0.15);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
         }
 
         .control-group {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .control-label {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             display: flex;
             justify-content: space-between;
         }
@@ -111,28 +145,36 @@
         .divider {
             height: 1px;
             background: rgba(255, 255, 255, 0.08);
-            margin: 20px 0;
+            margin: 16px 0;
         }
 
         .results {
-            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
         .result-item {
-            margin-bottom: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .result-item.full {
+            grid-column: 1 / -1;
         }
 
         .result-label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
             margin-bottom: 4px;
         }
 
         .result-value {
             font-family: 'Space Mono', monospace;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 700;
         }
 
@@ -148,24 +190,53 @@
             color: var(--accent-civ);
         }
 
+        .conclusion-box {
+            margin-top: 16px;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.08), rgba(255, 0, 170, 0.08));
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .conclusion-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .conclusion-main {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-civ);
+            margin-bottom: 6px;
+        }
+
+        .conclusion-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
         .formula-section {
             margin-top: auto;
-            padding-top: 20px;
+            padding-top: 16px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .formula-text {
             font-family: 'Space Mono', monospace;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: var(--text-muted);
-            line-height: 1.8;
+            line-height: 1.9;
         }
 
         .formula-text code {
             color: var(--accent-cyan);
         }
 
-        /* Visualization */
         .viz-container {
             position: relative;
             background: var(--bg-deep);
@@ -182,11 +253,11 @@
             bottom: 20px;
             left: 20px;
             display: flex;
-            gap: 20px;
-            font-size: 0.75rem;
+            gap: 16px;
+            font-size: 0.7rem;
             color: var(--text-muted);
-            background: rgba(0, 0, 0, 0.6);
-            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 14px;
             border-radius: 8px;
             backdrop-filter: blur(10px);
         }
@@ -194,7 +265,7 @@
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .legend-dot {
@@ -222,13 +293,14 @@
             top: 20px;
             right: 20px;
             font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: var(--text-muted);
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             padding: 10px 14px;
             border-radius: 6px;
             backdrop-filter: blur(10px);
             text-align: right;
+            line-height: 1.6;
         }
 
         .scale-info span {
@@ -240,11 +312,18 @@
 <body>
     <div class="layout">
         <div class="panel">
+            <div class="panel-title">Scenario</div>
+            <div class="presets">
+                <button class="preset-btn" onclick="setPreset('pessimistic')">Pessimistic</button>
+                <button class="preset-btn active" onclick="setPreset('baseline')">Baseline</button>
+                <button class="preset-btn" onclick="setPreset('optimistic')">Optimistic</button>
+            </div>
+
             <div class="panel-title">Parameters</div>
 
             <div class="control-group">
                 <div class="control-label">
-                    <span>Stars with habitable planets</span>
+                    <span>Stars with habitable zone planets</span>
                     <span class="control-value" id="v-stars">10%</span>
                 </div>
                 <input type="range" id="stars" min="1" max="50" value="10" oninput="update()">
@@ -252,15 +331,15 @@
 
             <div class="control-group">
                 <div class="control-label">
-                    <span>Life emerges</span>
+                    <span>Life emerges on such planets</span>
                     <span class="control-value" id="v-life">1%</span>
                 </div>
-                <input type="range" id="life" min="0.01" max="10" value="1" step="0.01" oninput="update()">
+                <input type="range" id="life" min="0.001" max="10" value="1" step="0.001" oninput="update()">
             </div>
 
             <div class="control-group">
                 <div class="control-label">
-                    <span>Intelligence evolves</span>
+                    <span>Intelligence evolves from life</span>
                     <span class="control-value" id="v-intel">0.1%</span>
                 </div>
                 <input type="range" id="intel" min="0.001" max="5" value="0.1" step="0.001" oninput="update()">
@@ -268,8 +347,8 @@
 
             <div class="control-group">
                 <div class="control-label">
-                    <span>Civilization window</span>
-                    <span class="control-value" id="v-window">10K years</span>
+                    <span>Detectable civilization window</span>
+                    <span class="control-value" id="v-window">10K yrs</span>
                 </div>
                 <input type="range" id="window" min="100" max="1000000" value="10000" oninput="update()">
             </div>
@@ -277,7 +356,7 @@
             <div class="control-group">
                 <div class="control-label">
                     <span>Galaxy age</span>
-                    <span class="control-value" id="v-age">13B years</span>
+                    <span class="control-value" id="v-age">13B yrs</span>
                 </div>
                 <input type="range" id="age" min="1" max="13" value="13" step="0.1" oninput="update()">
             </div>
@@ -286,28 +365,37 @@
 
             <div class="results">
                 <div class="result-item">
-                    <div class="result-label">Total civilizations ever</div>
+                    <div class="result-label">Total civs ever</div>
                     <div class="result-value cyan" id="r-total">0</div>
                 </div>
                 <div class="result-item">
-                    <div class="result-label">With life (now)</div>
-                    <div class="result-value life" id="r-life">0</div>
-                </div>
-                <div class="result-item">
-                    <div class="result-label">Civilizations (now)</div>
+                    <div class="result-label">Civs right now</div>
                     <div class="result-value civ" id="r-civs">0</div>
                 </div>
                 <div class="result-item">
-                    <div class="result-label">Avg distance between</div>
+                    <div class="result-label">Avg distance</div>
                     <div class="result-value cyan" id="r-dist">—</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Signal travel</div>
+                    <div class="result-value cyan" id="r-signal">—</div>
+                </div>
+            </div>
+
+            <div class="conclusion-box">
+                <div class="conclusion-label">Probability of contact in next 100 years</div>
+                <div class="conclusion-main" id="r-prob">0%</div>
+                <div class="conclusion-desc" id="r-prob-desc">
+                    Our radio signals have traveled ~100 light years since 1920s.
                 </div>
             </div>
 
             <div class="formula-section">
                 <div class="formula-text">
-                    <code>total</code> = stars × planets × life × intel<br>
+                    <code>totalCivs</code> = stars × hz × life × intel<br>
                     <code>concurrent</code> = total × (window / age)<br>
-                    <code>distance</code> = diameter / ∛concurrent
+                    <code>distance</code> = 100,000 ly / ∛concurrent<br>
+                    <code>P(contact)</code> = signalRadius / distance
                 </div>
             </div>
         </div>
@@ -317,19 +405,20 @@
             <div class="legend">
                 <div class="legend-item">
                     <div class="legend-dot star"></div>
-                    <span>Star system</span>
+                    <span>Star</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-dot life"></div>
-                    <span>Has life</span>
+                    <span>Life</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-dot civ"></div>
                     <span>Civilization</span>
                 </div>
             </div>
-            <div class="scale-info" id="scale-info">
-                1 dot = <span id="scale-value">100M</span> stars
+            <div class="scale-info">
+                <span id="scale-value">66.7M</span> stars per dot<br>
+                <span id="civ-count">0</span> civilizations shown
             </div>
         </div>
     </div>
@@ -339,25 +428,75 @@
            CONSTANTS
            ============================================ */
         const C = {
-            galaxyStars: 200e9,
-            galaxyDiameter: 100000,
-            galaxyAge: 13e9,
-            displayDots: 3000
+            galaxyStars: 200e9,          // 200 billion
+            galaxyDiameter: 100000,      // light years
+            displayDots: 3000,
+            ourSignalRadius: 100         // light years (radio since ~1920s)
         };
 
+        /* ============================================
+           PRESETS
+           ============================================ */
+        const PRESETS = {
+            pessimistic: {
+                stars: 5,
+                life: 0.1,
+                intel: 0.01,
+                window: 1000,
+                age: 13
+            },
+            baseline: {
+                stars: 10,
+                life: 1,
+                intel: 0.1,
+                window: 10000,
+                age: 13
+            },
+            optimistic: {
+                stars: 25,
+                life: 5,
+                intel: 1,
+                window: 100000,
+                age: 13
+            }
+        };
 
         /* ============================================
            LOGIC - Pure calculations
            ============================================ */
         function calculate(p) {
-            const planetsInHZ = C.galaxyStars * p.starsWithPlanets;
-            const withLife = planetsInHZ * p.lifeProbability;
-            const totalCivs = withLife * p.intelligenceProbability;
-            const concurrentCivs = totalCivs * (p.civWindow / p.galaxyAge);
+            const galaxyAge = p.galaxyAge;
 
+            // Convert percentages to fractions
+            const fStars = p.starsWithPlanets;      // already fraction
+            const fLife = p.lifeProbability;         // already fraction  
+            const fIntel = p.intelligenceProbability; // already fraction
+            const civWindow = p.civWindow;
+
+            // Core calculations
+            const planetsInHZ = C.galaxyStars * fStars;
+            const withLife = planetsInHZ * fLife;
+            const totalCivs = withLife * fIntel;
+
+            // How many exist RIGHT NOW (concurrent)
+            const concurrentCivs = totalCivs * (civWindow / galaxyAge);
+
+            // Average distance between concurrent civilizations
+            // Using cube root because space is 3D
             const avgDistance = concurrentCivs > 0
                 ? C.galaxyDiameter / Math.pow(concurrentCivs, 1 / 3)
                 : Infinity;
+
+            // Probability of contact
+            // Simplified: what fraction of the distance to nearest civ have we "illuminated"
+            let probContact = 0;
+            if (concurrentCivs > 0 && isFinite(avgDistance)) {
+                // Two-way contact requires signal to reach them AND response to reach us
+                // In 100 years, we can only detect civs within 50 ly (signal + response)
+                // But let's use one-way detection: they detect us OR we detect them
+                const detectionRadius = C.ourSignalRadius;
+                probContact = Math.min(1, detectionRadius / avgDistance);
+            }
 
             return {
                 planetsInHZ,
@@ -365,13 +504,10 @@
                 totalCivs,
                 concurrentCivs,
                 avgDistance,
-                // For display: how many dots of each type
-                starsPerDot: C.galaxyStars / C.displayDots,
-                lifeDots: Math.round(withLife / (C.galaxyStars / C.displayDots)),
-                civDots: Math.round(concurrentCivs / (C.galaxyStars / C.displayDots) * C.displayDots)
+                probContact,
+                starsPerDot: C.galaxyStars / C.displayDots
             };
         }
-
 
         /* ============================================
            RENDERING
@@ -379,11 +515,11 @@
         const canvas = document.getElementById('starfield');
         const ctx = canvas.getContext('2d');
         let stars = [];
+        let lastCivCount = 0;
 
         function initStars() {
             stars = [];
             for (let i = 0; i < C.displayDots; i++) {
-                // Distribute in a rough spiral galaxy shape
                 const arm = Math.floor(Math.random() * 4);
                 const armAngle = (arm / 4) * Math.PI * 2;
                 const dist = Math.pow(Math.random(), 0.5) * 0.45;
@@ -394,91 +530,97 @@
                     x: 0.5 + Math.cos(angle) * dist,
                     y: 0.5 + Math.sin(angle) * dist,
                     size: Math.random() * 1.5 + 0.5,
-                    brightness: Math.random() * 0.5 + 0.2
+                    brightness: Math.random() * 0.5 + 0.2,
+                    seed: Math.random()
                 });
             }
+            // Sort by seed for consistent selection
+            stars.sort((a, b) => a.seed - b.seed);
         }
 
         function render(results) {
-            const w = canvas.width = canvas.offsetWidth * window.devicePixelRatio;
-            const h = canvas.height = canvas.offsetHeight * window.devicePixelRatio;
-            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-
-            const width = canvas.offsetWidth;
-            const height = canvas.offsetHeight;
+            const dpr = window.devicePixelRatio || 1;
+            const w = canvas.offsetWidth;
+            const h = canvas.offsetHeight;
+            canvas.width = w * dpr;
+            canvas.height = h * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
             // Clear
             ctx.fillStyle = '#050508';
-            ctx.fillRect(0, 0, width, height);
+            ctx.fillRect(0, 0, w, h);
 
-            // Determine how many special dots
-            const lifeDots = Math.min(results.lifeDots, C.displayDots);
-            const civDots = Math.min(Math.max(Math.round(results.concurrentCivs), 0), 50);
+            // Calculate how many dots should be life/civ
+            // Scale: each dot represents (galaxyStars / displayDots) stars
+            const starsPerDot = results.starsPerDot;
 
-            // Shuffle indices for random selection
-            const indices = stars.map((_, i) => i);
-            for (let i = indices.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [indices[i], indices[j]] = [indices[j], indices[i]];
-            }
+            // Life dots: proportional to withLife
+            const lifeFraction = results.withLife / C.galaxyStars;
+            const lifeDots = Math.round(C.displayDots * lifeFraction);
 
-            const lifeIndices = new Set(indices.slice(0, lifeDots));
-            const civIndices = new Set(indices.slice(0, civDots));
+            // Civ dots: show actual concurrent count (capped for visibility)
+            const civDots = Math.min(Math.round(results.concurrentCivs), 100);
+
+            // Update scale info
+            document.getElementById('civ-count').textContent = civDots;
 
             // Draw stars
             stars.forEach((star, i) => {
-                const x = star.x * width;
-                const y = star.y * height;
+                const x = star.x * w;
+                const y = star.y * h;
 
-                if (civIndices.has(i)) {
+                const isCiv = i < civDots;
+                const isLife = i < lifeDots && !isCiv;
+
+                if (isCiv) {
                     // Civilization - bright gold with glow
                     ctx.beginPath();
-                    const gradient = ctx.createRadialGradient(x, y, 0, x, y, 12);
+                    const gradient = ctx.createRadialGradient(x, y, 0, x, y, 14);
                     gradient.addColorStop(0, 'rgba(255, 215, 0, 1)');
                     gradient.addColorStop(0.3, 'rgba(255, 215, 0, 0.4)');
                     gradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
                     ctx.fillStyle = gradient;
-                    ctx.arc(x, y, 12, 0, Math.PI * 2);
+                    ctx.arc(x, y, 14, 0, Math.PI * 2);
                     ctx.fill();
 
                     ctx.beginPath();
                     ctx.fillStyle = '#ffd700';
                     ctx.arc(x, y, 3, 0, Math.PI * 2);
                     ctx.fill();
-                } else if (lifeIndices.has(i)) {
+                } else if (isLife) {
                     // Life - green with subtle glow
                     ctx.beginPath();
-                    const gradient = ctx.createRadialGradient(x, y, 0, x, y, 6);
+                    const gradient = ctx.createRadialGradient(x, y, 0, x, y, 5);
                     gradient.addColorStop(0, 'rgba(57, 255, 20, 0.8)');
                     gradient.addColorStop(1, 'rgba(57, 255, 20, 0)');
                     ctx.fillStyle = gradient;
-                    ctx.arc(x, y, 6, 0, Math.PI * 2);
+                    ctx.arc(x, y, 5, 0, Math.PI * 2);
                     ctx.fill();
 
                     ctx.beginPath();
                     ctx.fillStyle = '#39ff14';
-                    ctx.arc(x, y, 1.5, 0, Math.PI * 2);
+                    ctx.arc(x, y, 1.2, 0, Math.PI * 2);
                     ctx.fill();
                 } else {
                     // Regular star
                     ctx.beginPath();
-                    ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness * 0.4})`;
+                    ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness * 0.35})`;
                     ctx.arc(x, y, star.size, 0, Math.PI * 2);
                     ctx.fill();
                 }
             });
 
-            // Add "us" marker in a fixed position
-            const usX = width * 0.62;
-            const usY = height * 0.48;
+            // "Us" marker
+            const usX = w * 0.62;
+            const usY = h * 0.48;
 
             ctx.beginPath();
-            const usGradient = ctx.createRadialGradient(usX, usY, 0, usX, usY, 15);
+            const usGradient = ctx.createRadialGradient(usX, usY, 0, usX, usY, 18);
             usGradient.addColorStop(0, 'rgba(0, 240, 255, 1)');
-            usGradient.addColorStop(0.3, 'rgba(0, 240, 255, 0.3)');
+            usGradient.addColorStop(0.2, 'rgba(0, 240, 255, 0.5)');
             usGradient.addColorStop(1, 'rgba(0, 240, 255, 0)');
             ctx.fillStyle = usGradient;
-            ctx.arc(usX, usY, 15, 0, Math.PI * 2);
+            ctx.arc(usX, usY, 18, 0, Math.PI * 2);
             ctx.fill();
 
             ctx.beginPath();
@@ -486,23 +628,33 @@
             ctx.arc(usX, usY, 3, 0, Math.PI * 2);
             ctx.fill();
 
-            ctx.font = '10px "Space Mono", monospace';
-            ctx.fillStyle = 'rgba(0, 240, 255, 0.8)';
-            ctx.fillText('US', usX + 10, usY + 4);
+            ctx.font = '11px "Space Mono", monospace';
+            ctx.fillStyle = 'rgba(0, 240, 255, 0.9)';
+            ctx.fillText('US', usX + 12, usY + 4);
         }
 
-
         /* ============================================
-           UI UPDATES
+           UI
            ============================================ */
         function fmt(n) {
-            if (!isFinite(n)) return '∞';
+            if (!isFinite(n) || isNaN(n)) return '—';
+            if (n >= 1e12) return (n / 1e12).toFixed(1) + 'T';
             if (n >= 1e9) return (n / 1e9).toFixed(1) + 'B';
             if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
             if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
             if (n >= 1) return n.toFixed(1);
-            if (n >= 0.01) return n.toFixed(2);
-            return n.toExponential(1);
+            if (n >= 0.001) return n.toFixed(3);
+            if (n > 0) return n.toExponential(1);
+            return '0';
+        }
+
+        function fmtPercent(n) {
+            if (!isFinite(n) || isNaN(n)) return '0%';
+            if (n >= 1) return '~100%';
+            if (n >= 0.01) return (n * 100).toFixed(1) + '%';
+            if (n >= 0.0001) return (n * 100).toFixed(3) + '%';
+            if (n > 0) return (n * 100).toExponential(1) + '%';
+            return '≈0%';
         }
 
         function getParams() {
@@ -528,27 +680,54 @@
 
             // Update results
             document.getElementById('r-total').textContent = fmt(r.totalCivs);
-            document.getElementById('r-life').textContent = fmt(r.withLife);
             document.getElementById('r-civs').textContent = fmt(r.concurrentCivs);
-            document.getElementById('r-dist').textContent = r.concurrentCivs > 0
-                ? fmt(r.avgDistance) + ' ly'
-                : '—';
+            document.getElementById('r-dist').textContent = r.concurrentCivs > 0 ? fmt(r.avgDistance) + ' ly' : '—';
+            document.getElementById('r-signal').textContent = r.concurrentCivs > 0 ? fmt(r.avgDistance) + ' yrs' : '—';
+
+            // Update probability
+            document.getElementById('r-prob').textContent = fmtPercent(r.probContact);
+
+            // Update description based on probability
+            let desc = '';
+            if (r.probContact <= 0 || !isFinite(r.avgDistance)) {
+                desc = 'No civilizations exist simultaneously with us at these parameters.';
+            } else if (r.probContact < 0.0001) {
+                desc = `Nearest civilization ~${fmt(r.avgDistance)} ly away. Our signals have only traveled ${C.ourSignalRadius} ly.`;
+            } else if (r.probContact < 0.01) {
+                desc = `Distance to nearest: ~${fmt(r.avgDistance)} ly. Would take ${fmt(r.avgDistance * 2)} years for two-way communication.`;
+            } else {
+                desc = `Relatively close neighbors at ~${fmt(r.avgDistance)} ly. But detection still requires they are listening.`;
+            }
+            document.getElementById('r-prob-desc').textContent = desc;
 
             // Update scale
             document.getElementById('scale-value').textContent = fmt(r.starsPerDot);
 
-            // Render
+            // Clear preset buttons
+            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+
             render(r);
+        }
+
+        function setPreset(name) {
+            const p = PRESETS[name];
+            document.getElementById('stars').value = p.stars;
+            document.getElementById('life').value = p.life;
+            document.getElementById('intel').value = p.intel;
+            document.getElementById('window').value = p.window;
+            document.getElementById('age').value = p.age;
+
+            // Highlight button
+            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            update();
         }
 
         // Init
         initStars();
         update();
-
-        // Handle resize
-        window.addEventListener('resize', () => {
-            update();
-        });
+        window.addEventListener('resize', update);
     </script>
 </body>
 
