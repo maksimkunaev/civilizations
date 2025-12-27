@@ -28,8 +28,8 @@ Our radio signals have traveled only ~100 light-years since the 1920s.
 
 ## Usage
 
-Open `fermi.html` in browser. Adjust sliders or use presets (Pessimistic / Baseline / Optimistic).
+Open `index.html` in browser. Adjust sliders or use presets (Pessimistic / Baseline / Optimistic).
 
 ## Files
 
-- `fermi.html` — main visualization (self-contained, no dependencies)
+- `index.html` — main visualization (self-contained, no dependencies)
