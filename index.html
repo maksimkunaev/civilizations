@@ -15,6 +15,7 @@
             --accent-cyan: #00f0ff;
             --accent-life: #39ff14;
             --accent-civ: #ffd700;
+            --accent-prob: #ff6b6b;
             --text-primary: #e8e8f0;
             --text-muted: #5a5a6a;
         }
@@ -35,18 +36,22 @@
 
         .layout {
             display: grid;
-            grid-template-columns: 320px 1fr;
+            grid-template-columns: 300px 1fr 280px;
             height: 100vh;
         }
 
-        @media (max-width: 800px) {
+        @media (max-width: 1000px) {
             .layout {
                 grid-template-columns: 1fr;
-                grid-template-rows: auto 1fr;
+                grid-template-rows: auto 1fr auto;
             }
 
             .panel {
-                max-height: 50vh;
+                max-height: 40vh;
+            }
+
+            .verdict-panel {
+                max-height: 30vh;
             }
         }
 
@@ -57,6 +62,16 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+        }
+
+        .verdict-panel {
+            background: linear-gradient(180deg, #0a0a10 0%, #0d0d15 100%);
+            padding: 20px;
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
         }
 
         .panel-title {
@@ -100,11 +115,11 @@
         }
 
         .control-group {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .control-label {
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
             margin-bottom: 5px;
             display: flex;
@@ -145,27 +160,23 @@
         .divider {
             height: 1px;
             background: rgba(255, 255, 255, 0.08);
-            margin: 16px 0;
+            margin: 14px 0;
         }
 
         .results {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
         }
 
         .result-item {
             background: rgba(255, 255, 255, 0.02);
-            padding: 12px;
+            padding: 10px;
             border-radius: 8px;
         }
 
-        .result-item.full {
-            grid-column: 1 / -1;
-        }
-
         .result-label {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.08em;
@@ -174,7 +185,7 @@
 
         .result-value {
             font-family: 'Space Mono', monospace;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 700;
         }
 
@@ -182,53 +193,80 @@
             color: var(--accent-cyan);
         }
 
-        .result-value.life {
-            color: var(--accent-life);
+        /* ===== VERDICT PANEL STYLES ===== */
+        .verdict-box {
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
         }
 
-        .result-value.civ {
-            color: var(--accent-civ);
+        .verdict-box.civs {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
         }
 
-        .conclusion-box {
-            margin-top: 16px;
-            padding: 16px;
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.08), rgba(255, 0, 170, 0.08));
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .verdict-box.probability {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(255, 107, 107, 0.05));
+            border: 2px solid rgba(255, 107, 107, 0.4);
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.1);
         }
 
-        .conclusion-label {
+        .verdict-label {
+            font-family: 'Space Mono', monospace;
             font-size: 0.65rem;
-            color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
             margin-bottom: 8px;
         }
 
-        .conclusion-main {
+        .verdict-main {
             font-family: 'Space Mono', monospace;
-            font-size: 1.8rem;
+            font-size: 2.8rem;
             font-weight: 700;
-            color: var(--accent-civ);
+            line-height: 1;
             margin-bottom: 6px;
         }
 
-        .conclusion-desc {
+        .verdict-main.civs {
+            color: var(--accent-civ);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .verdict-main.probability {
+            color: var(--accent-prob);
+            text-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+        }
+
+        .verdict-sub {
             font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .verdict-detail {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.7rem;
             color: var(--text-muted);
             line-height: 1.5;
         }
 
+        .verdict-detail strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
         .formula-section {
             margin-top: auto;
-            padding-top: 16px;
+            padding-top: 14px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .formula-text {
             font-family: 'Space Mono', monospace;
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             color: var(--text-muted);
             line-height: 1.9;
         }
@@ -291,7 +329,7 @@
         .scale-info {
             position: absolute;
             top: 20px;
-            right: 20px;
+            left: 20px;
             font-family: 'Space Mono', monospace;
             font-size: 0.68rem;
             color: var(--text-muted);
@@ -299,7 +337,6 @@
             padding: 10px 14px;
             border-radius: 6px;
             backdrop-filter: blur(10px);
-            text-align: right;
             line-height: 1.6;
         }
 
@@ -311,6 +348,7 @@
 
 <body>
     <div class="layout">
+        <!-- LEFT: Controls -->
         <div class="panel">
             <div class="panel-title">Scenario</div>
             <div class="presets">
@@ -323,7 +361,7 @@
 
             <div class="control-group">
                 <div class="control-label">
-                    <span>Stars with habitable zone planets</span>
+                    <span>Stars with habitable planets</span>
                     <span class="control-value" id="v-stars">10%</span>
                 </div>
                 <input type="range" id="stars" min="1" max="50" value="10" oninput="update()">
@@ -331,7 +369,7 @@
 
             <div class="control-group">
                 <div class="control-label">
-                    <span>Life emerges on such planets</span>
+                    <span>Life emerges</span>
                     <span class="control-value" id="v-life">1%</span>
                 </div>
                 <input type="range" id="life" min="0.001" max="10" value="1" step="0.001" oninput="update()">
@@ -339,7 +377,7 @@
 
             <div class="control-group">
                 <div class="control-label">
-                    <span>Intelligence evolves from life</span>
+                    <span>Intelligence evolves</span>
                     <span class="control-value" id="v-intel">0.1%</span>
                 </div>
                 <input type="range" id="intel" min="0.001" max="5" value="0.1" step="0.001" oninput="update()">
@@ -347,7 +385,7 @@
 
             <div class="control-group">
                 <div class="control-label">
-                    <span>Detectable civilization window</span>
+                    <span>Civilization window</span>
                     <span class="control-value" id="v-window">10K yrs</span>
                 </div>
                 <input type="range" id="window" min="100" max="1000000" value="10000" oninput="update()">
@@ -369,24 +407,8 @@
                     <div class="result-value cyan" id="r-total">0</div>
                 </div>
                 <div class="result-item">
-                    <div class="result-label">Civs right now</div>
-                    <div class="result-value civ" id="r-civs">0</div>
-                </div>
-                <div class="result-item">
                     <div class="result-label">Avg distance</div>
                     <div class="result-value cyan" id="r-dist">—</div>
-                </div>
-                <div class="result-item">
-                    <div class="result-label">Signal travel</div>
-                    <div class="result-value cyan" id="r-signal">—</div>
-                </div>
-            </div>
-
-            <div class="conclusion-box">
-                <div class="conclusion-label">Probability of contact in next 100 years</div>
-                <div class="conclusion-main" id="r-prob">0%</div>
-                <div class="conclusion-desc" id="r-prob-desc">
-                    Our radio signals have traveled ~100 light years since 1920s.
                 </div>
             </div>
 
@@ -400,6 +422,7 @@
             </div>
         </div>
 
+        <!-- CENTER: Visualization -->
         <div class="viz-container">
             <canvas id="starfield"></canvas>
             <div class="legend">
@@ -421,6 +444,28 @@
                 <span id="civ-count">0</span> civilizations shown
             </div>
         </div>
+
+        <!-- RIGHT: Verdict -->
+        <div class="verdict-panel">
+            <div class="verdict-box civs">
+                <div class="verdict-label">Civilizations Right Now</div>
+                <div class="verdict-main civs" id="r-civs">0</div>
+                <div class="verdict-sub">in our galaxy</div>
+                <div class="verdict-detail">
+                    Distance to nearest: <strong id="r-dist2">—</strong><br>
+                    Signal travel time: <strong id="r-signal">—</strong>
+                </div>
+            </div>
+
+            <div class="verdict-box probability">
+                <div class="verdict-label">Contact Probability</div>
+                <div class="verdict-main probability" id="r-prob">0%</div>
+                <div class="verdict-sub">in next 100 years</div>
+                <div class="verdict-detail" id="r-prob-desc">
+                    Our radio signals have traveled ~100 light years since 1920s.
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -428,10 +473,10 @@
            CONSTANTS
            ============================================ */
         const C = {
-            galaxyStars: 200e9,          // 200 billion
-            galaxyDiameter: 100000,      // light years
+            galaxyStars: 200e9,
+            galaxyDiameter: 100000,
             displayDots: 3000,
-            ourSignalRadius: 100         // light years (radio since ~1920s)
+            ourSignalRadius: 100
         };
 
         /* ============================================
@@ -462,38 +507,26 @@
         };
 
         /* ============================================
-           LOGIC - Pure calculations
+           LOGIC
            ============================================ */
         function calculate(p) {
             const galaxyAge = p.galaxyAge;
-
-            // Convert percentages to fractions
-            const fStars = p.starsWithPlanets;      // already fraction
-            const fLife = p.lifeProbability;         // already fraction  
-            const fIntel = p.intelligenceProbability; // already fraction
+            const fStars = p.starsWithPlanets;
+            const fLife = p.lifeProbability;
+            const fIntel = p.intelligenceProbability;
             const civWindow = p.civWindow;
 
-            // Core calculations
             const planetsInHZ = C.galaxyStars * fStars;
             const withLife = planetsInHZ * fLife;
             const totalCivs = withLife * fIntel;
-
-            // How many exist RIGHT NOW (concurrent)
             const concurrentCivs = totalCivs * (civWindow / galaxyAge);
 
-            // Average distance between concurrent civilizations
-            // Using cube root because space is 3D
             const avgDistance = concurrentCivs > 0
                 ? C.galaxyDiameter / Math.pow(concurrentCivs, 1 / 3)
                 : Infinity;
 
-            // Probability of contact
-            // Simplified: what fraction of the distance to nearest civ have we "illuminated"
             let probContact = 0;
             if (concurrentCivs > 0 && isFinite(avgDistance)) {
-                // Two-way contact requires signal to reach them AND response to reach us
-                // In 100 years, we can only detect civs within 50 ly (signal + response)
-                // But let's use one-way detection: they detect us OR we detect them
                 const detectionRadius = C.ourSignalRadius;
                 probContact = Math.min(1, detectionRadius / avgDistance);
             }
@@ -515,7 +548,6 @@
         const canvas = document.getElementById('starfield');
         const ctx = canvas.getContext('2d');
         let stars = [];
-        let lastCivCount = 0;
 
         function initStars() {
             stars = [];
@@ -534,7 +566,6 @@
                     seed: Math.random()
                 });
             }
-            // Sort by seed for consistent selection
             stars.sort((a, b) => a.seed - b.seed);
         }
 
@@ -546,25 +577,15 @@
             canvas.height = h * dpr;
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-            // Clear
             ctx.fillStyle = '#050508';
             ctx.fillRect(0, 0, w, h);
 
-            // Calculate how many dots should be life/civ
-            // Scale: each dot represents (galaxyStars / displayDots) stars
-            const starsPerDot = results.starsPerDot;
-
-            // Life dots: proportional to withLife
             const lifeFraction = results.withLife / C.galaxyStars;
             const lifeDots = Math.round(C.displayDots * lifeFraction);
-
-            // Civ dots: show actual concurrent count (capped for visibility)
             const civDots = Math.min(Math.round(results.concurrentCivs), 100);
 
-            // Update scale info
             document.getElementById('civ-count').textContent = civDots;
 
-            // Draw stars
             stars.forEach((star, i) => {
                 const x = star.x * w;
                 const y = star.y * h;
@@ -573,7 +594,6 @@
                 const isLife = i < lifeDots && !isCiv;
 
                 if (isCiv) {
-                    // Civilization - bright gold with glow
                     ctx.beginPath();
                     const gradient = ctx.createRadialGradient(x, y, 0, x, y, 14);
                     gradient.addColorStop(0, 'rgba(255, 215, 0, 1)');
@@ -588,7 +608,6 @@
                     ctx.arc(x, y, 3, 0, Math.PI * 2);
                     ctx.fill();
                 } else if (isLife) {
-                    // Life - green with subtle glow
                     ctx.beginPath();
                     const gradient = ctx.createRadialGradient(x, y, 0, x, y, 5);
                     gradient.addColorStop(0, 'rgba(57, 255, 20, 0.8)');
@@ -602,7 +621,6 @@
                     ctx.arc(x, y, 1.2, 0, Math.PI * 2);
                     ctx.fill();
                 } else {
-                    // Regular star
                     ctx.beginPath();
                     ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness * 0.35})`;
                     ctx.arc(x, y, star.size, 0, Math.PI * 2);
@@ -611,7 +629,7 @@
             });
 
             // "Us" marker
-            const usX = w * 0.62;
+            const usX = w * 0.55;
             const usY = h * 0.48;
 
             ctx.beginPath();
@@ -671,32 +689,33 @@
             const p = getParams();
             const r = calculate(p);
 
-            // Update labels
+            // Update control labels
             document.getElementById('v-stars').textContent = (p.starsWithPlanets * 100).toFixed(0) + '%';
             document.getElementById('v-life').textContent = (p.lifeProbability * 100).toFixed(2) + '%';
             document.getElementById('v-intel').textContent = (p.intelligenceProbability * 100).toFixed(3) + '%';
             document.getElementById('v-window').textContent = fmt(p.civWindow) + ' yrs';
             document.getElementById('v-age').textContent = (p.galaxyAge / 1e9).toFixed(1) + 'B yrs';
 
-            // Update results
+            // Update left panel results
             document.getElementById('r-total').textContent = fmt(r.totalCivs);
-            document.getElementById('r-civs').textContent = fmt(r.concurrentCivs);
             document.getElementById('r-dist').textContent = r.concurrentCivs > 0 ? fmt(r.avgDistance) + ' ly' : '—';
-            document.getElementById('r-signal').textContent = r.concurrentCivs > 0 ? fmt(r.avgDistance) + ' yrs' : '—';
 
-            // Update probability
+            // Update RIGHT PANEL (verdict)
+            document.getElementById('r-civs').textContent = fmt(r.concurrentCivs);
+            document.getElementById('r-dist2').textContent = r.concurrentCivs > 0 ? fmt(r.avgDistance) + ' ly' : '—';
+            document.getElementById('r-signal').textContent = r.concurrentCivs > 0 ? fmt(r.avgDistance) + ' yrs' : '—';
             document.getElementById('r-prob').textContent = fmtPercent(r.probContact);
 
-            // Update description based on probability
+            // Update description
             let desc = '';
             if (r.probContact <= 0 || !isFinite(r.avgDistance)) {
                 desc = 'No civilizations exist simultaneously with us at these parameters.';
             } else if (r.probContact < 0.0001) {
-                desc = `Nearest civilization ~${fmt(r.avgDistance)} ly away. Our signals have only traveled ${C.ourSignalRadius} ly.`;
+                desc = `Our signals have only traveled 100 ly. Nearest civ is ${fmt(r.avgDistance)} ly away.`;
             } else if (r.probContact < 0.01) {
-                desc = `Distance to nearest: ~${fmt(r.avgDistance)} ly. Would take ${fmt(r.avgDistance * 2)} years for two-way communication.`;
+                desc = `Two-way communication would take ${fmt(r.avgDistance * 2)} years.`;
             } else {
-                desc = `Relatively close neighbors at ~${fmt(r.avgDistance)} ly. But detection still requires they are listening.`;
+                desc = `Relatively close at ${fmt(r.avgDistance)} ly. But detection requires they are listening.`;
             }
             document.getElementById('r-prob-desc').textContent = desc;
 
@@ -717,7 +736,6 @@
             document.getElementById('window').value = p.window;
             document.getElementById('age').value = p.age;
 
-            // Highlight button
             document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
 
