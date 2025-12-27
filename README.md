@@ -1,38 +1,48 @@
-# Fermi Paradox Visualizer
+# 🌌 Fermi Paradox Visualizer
 
-Interactive visualization of why we haven't detected other civilizations.
+**Where is everybody?**
 
-## What it does
+In 1950, physicist Enrico Fermi asked this simple question over lunch. Given the billions of stars in our galaxy, many older than our Sun — where are all the alien civilizations? Why the silence?
 
-Calculates probability of civilizations existing simultaneously in our galaxy based on:
-- Stars with habitable planets
-- Probability of life emerging
-- Probability of intelligence evolving
-- Lifespan of detectable civilizations
-- Galaxy age
+This interactive visualization lets you explore one possible answer: **they may exist, but the universe is just too big and time is too short.**
 
-## Core formulas
+The probability is very low — **but it's not necessarily zero.**
+
+## 🚀 Demo
+
+**[→ Try it live](https://maksimkunaev.github.io/civilizations/)**
+
+## What This Shows
+
+Play with the parameters and watch the galaxy respond:
+
+- **Civilizations right now** — not throughout history, but existing *at this very moment*
+- **Distance to nearest neighbor** — we can see how far it is 
+- **Contact probability** — our chance of hearing from anyone in the next 100 years
+
+Even if millions of civilizations have existed throughout the galaxy's 13 billion year history, only a handful exist *simultaneously*. And they're scattered across 100,000 light-years.
+
+Our radio signals have traveled just ~100 light-years since the 1920s. A tiny bubble in an ocean of silence.
+
+## How It Works
+
+Based on a simplified Drake Equation model:
 
 ```
-totalCivs = galaxyStars × habitablePlanets × life × intelligence
-concurrent = totalCivs × (civilizationWindow / galaxyAge)
-distance = galaxyDiameter / ∛concurrent
-P(contact) = ourSignalRadius / distance
+totalCivs     = stars × habitablePlanets × life × intelligence
+concurrent    = totalCivs × (civilizationWindow / galaxyAge)  
+distance      = galaxyDiameter / ∛concurrent
+P(contact)    = signalRadius / distance
 ```
 
-## Key insight
+## ⚠️ Disclaimer
 
-Even with millions of civilizations throughout galaxy history, very few exist *at the same time*. And those that do are typically tens of thousands of light-years apart.
+**This is a thought experiment, not a scientific claim.**
 
-Our radio signals have traveled only ~100 light-years since the 1920s.
+The parameters (probability of life, intelligence, civilization lifespan) are fundamentally uncertain — estimates vary by 10+ orders of magnitude.
 
-## Demo
-[https://maksimkunaev.github.io/civilizations/](https://maksimkunaev.github.io/civilizations/)
+This tool is for building intuition about cosmic scale and time, not for making predictions. For rigorous treatment of these uncertainties, see Sandberg et al. *"Dissolving the Fermi Paradox"* (2018).
 
-## Usage
+## 📁 Files
 
-Open `index.html` in browser. Adjust sliders or use presets (Pessimistic / Baseline / Optimistic).
-
-## Files
-
-- `index.html` — main visualization (self-contained, no dependencies)
+- `index.html` — self-contained visualization, no dependencies
