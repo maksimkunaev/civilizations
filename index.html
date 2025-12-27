@@ -36,11 +36,11 @@
 
         .layout {
             display: grid;
-            grid-template-columns: 300px 1fr 280px;
+            grid-template-columns: 300px 1fr 320px;
             height: 100vh;
         }
 
-        @media (max-width: 1000px) {
+        @media (max-width: 1200px) {
             .layout {
                 grid-template-columns: 1fr;
                 grid-template-rows: auto 1fr auto;
@@ -51,7 +51,8 @@
             }
 
             .verdict-panel {
-                max-height: 30vh;
+                max-height: 50vh;
+                overflow-y: auto;
             }
         }
 
@@ -70,8 +71,8 @@
             border-left: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            gap: 20px;
+            gap: 16px;
+            overflow-y: auto;
         }
 
         .panel-title {
@@ -193,9 +194,48 @@
             color: var(--accent-cyan);
         }
 
+        /* ===== STATS GRID ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .stat-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 4px;
+        }
+
+        .stat-desc {
+            font-size: 0.58rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            opacity: 0.7;
+        }
+
         /* ===== VERDICT PANEL STYLES ===== */
         .verdict-box {
-            padding: 20px;
+            padding: 18px;
             border-radius: 12px;
             text-align: center;
         }
@@ -223,7 +263,7 @@
 
         .verdict-main {
             font-family: 'Space Mono', monospace;
-            font-size: 2.8rem;
+            font-size: 2.4rem;
             font-weight: 700;
             line-height: 1;
             margin-bottom: 6px;
@@ -455,12 +495,39 @@
             </div>
         </div>
 
-        <!-- RIGHT: Verdict -->
+        <!-- RIGHT: Stats & Verdict -->
         <div class="verdict-panel">
+            <div class="panel-title" style="margin-bottom: 10px;">Calculation Breakdown</div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Planets in Habitable Zone</div>
+                    <div class="stat-value" id="s-hz">0</div>
+                    <div class="stat-desc">Could support liquid water (not too hot/cold)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Planets Where Life May Emerge</div>
+                    <div class="stat-value" id="s-life">0</div>
+                    <div class="stat-desc">Estimated planets that could develop life</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Tech Civilizations Ever</div>
+                    <div class="stat-value" id="s-civs-total">0</div>
+                    <div class="stat-desc">Total that may have existed in galaxy's history</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Temporal Overlap Chance</div>
+                    <div class="stat-value" id="s-overlap">0%</div>
+                    <div class="stat-desc">Probability civilizations exist at same time</div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
             <div class="verdict-box civs">
-                <div class="verdict-label">Civilizations Right Now</div>
+                <div class="verdict-label">Estimated Civilizations Right Now</div>
                 <div class="verdict-main civs" id="r-civs">0</div>
-                <div class="verdict-sub">in our galaxy</div>
+                <div class="verdict-sub">that could exist in our galaxy today</div>
                 <div class="verdict-detail">
                     Distance to nearest: <strong id="r-dist2">—</strong><br>
                     Signal travel time: <strong id="r-signal">—</strong>
@@ -468,9 +535,9 @@
             </div>
 
             <div class="verdict-box probability">
-                <div class="verdict-label">Contact Probability</div>
+                <div class="verdict-label">Probability of Contact</div>
                 <div class="verdict-main probability" id="r-prob">0%</div>
-                <div class="verdict-sub">in next 100 years</div>
+                <div class="verdict-sub">chance of detecting them in next 100 years</div>
                 <div class="verdict-detail" id="r-prob-desc">
                     Our radio signals have traveled ~100 light years since 1920s.
                 </div>
@@ -526,15 +593,16 @@
            ============================================ */
         function calculate(p) {
             const galaxyAge = p.galaxyAge;
-            const fStars = p.starsWithPlanets;
-            const fLife = p.lifeProbability;
-            const fIntel = p.intelligenceProbability;
+            const starsWithPlanets = p.starsWithPlanets;
+            const lifeProbability = p.lifeProbability;
+            const intelligenceProbability = p.intelligenceProbability;
             const civWindow = p.civWindow;
 
-            const planetsInHZ = C.galaxyStars * fStars;
-            const withLife = planetsInHZ * fLife;
-            const totalCivs = withLife * fIntel;
+            const planetsInHZ = C.galaxyStars * starsWithPlanets;
+            const withLife = planetsInHZ * lifeProbability;
+            const totalCivs = withLife * intelligenceProbability;
             const concurrentCivs = totalCivs * (civWindow / galaxyAge);
+            const overlapRatio = civWindow / galaxyAge;
 
             const avgDistance = concurrentCivs > 0
                 ? C.galaxyDiameter / Math.pow(concurrentCivs, 1 / 3)
@@ -551,6 +619,7 @@
                 withLife,
                 totalCivs,
                 concurrentCivs,
+                overlapRatio,
                 avgDistance,
                 probContact,
                 starsPerDot: C.galaxyStars / C.displayDots
@@ -710,6 +779,12 @@
             document.getElementById('v-intel').textContent = (p.intelligenceProbability * 100).toFixed(3) + '%';
             document.getElementById('v-window').textContent = fmt(p.civWindow) + ' yrs';
             document.getElementById('v-age').textContent = (p.galaxyAge / 1e9).toFixed(1) + 'B yrs';
+
+            // Update stats grid
+            document.getElementById('s-hz').textContent = fmt(r.planetsInHZ);
+            document.getElementById('s-life').textContent = fmt(r.withLife);
+            document.getElementById('s-civs-total').textContent = fmt(r.totalCivs);
+            document.getElementById('s-overlap').textContent = fmtPercent(r.overlapRatio);
 
             // Update left panel results
             document.getElementById('r-total').textContent = fmt(r.totalCivs);
