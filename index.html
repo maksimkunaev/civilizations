@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fermi Paradox: Scale of Emptiness</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #050508;
+            --bg-surface: #0a0a10;
+            --accent-cyan: #00f0ff;
+            --accent-life: #39ff14;
+            --accent-civ: #ffd700;
+            --text-primary: #e8e8f0;
+            --text-muted: #5a5a6a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            height: 100vh;
+        }
+
+        @media (max-width: 800px) {
+            .layout {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+            }
+        }
+
+        /* Left Panel */
+        .panel {
+            background: var(--bg-surface);
+            padding: 24px;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .control-value {
+            font-family: 'Space Mono', monospace;
+            color: var(--accent-cyan);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 4px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            border: none;
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            margin: 20px 0;
+        }
+
+        .results {
+            flex: 1;
+        }
+
+        .result-item {
+            margin-bottom: 16px;
+        }
+
+        .result-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 4px;
+        }
+
+        .result-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .result-value.cyan {
+            color: var(--accent-cyan);
+        }
+
+        .result-value.life {
+            color: var(--accent-life);
+        }
+
+        .result-value.civ {
+            color: var(--accent-civ);
+        }
+
+        .formula-section {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .formula-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .formula-text code {
+            color: var(--accent-cyan);
+        }
+
+        /* Visualization */
+        .viz-container {
+            position: relative;
+            background: var(--bg-deep);
+            overflow: hidden;
+        }
+
+        #starfield {
+            width: 100%;
+            height: 100%;
+        }
+
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            gap: 20px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: rgba(0, 0, 0, 0.6);
+            padding: 12px 16px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.star {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .legend-dot.life {
+            background: var(--accent-life);
+            box-shadow: 0 0 6px var(--accent-life);
+        }
+
+        .legend-dot.civ {
+            background: var(--accent-civ);
+            box-shadow: 0 0 10px var(--accent-civ);
+        }
+
+        .scale-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px 14px;
+            border-radius: 6px;
+            backdrop-filter: blur(10px);
+            text-align: right;
+        }
+
+        .scale-info span {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layout">
+        <div class="panel">
+            <div class="panel-title">Parameters</div>
+
+            <div class="control-group">
+                <div class="control-label">
+                    <span>Stars with habitable planets</span>
+                    <span class="control-value" id="v-stars">10%</span>
+                </div>
+                <input type="range" id="stars" min="1" max="50" value="10" oninput="update()">
+            </div>
+
+            <div class="control-group">
+                <div class="control-label">
+                    <span>Life emerges</span>
+                    <span class="control-value" id="v-life">1%</span>
+                </div>
+                <input type="range" id="life" min="0.01" max="10" value="1" step="0.01" oninput="update()">
+            </div>
+
+            <div class="control-group">
+                <div class="control-label">
+                    <span>Intelligence evolves</span>
+                    <span class="control-value" id="v-intel">0.1%</span>
+                </div>
+                <input type="range" id="intel" min="0.001" max="5" value="0.1" step="0.001" oninput="update()">
+            </div>
+
+            <div class="control-group">
+                <div class="control-label">
+                    <span>Civilization window</span>
+                    <span class="control-value" id="v-window">10K years</span>
+                </div>
+                <input type="range" id="window" min="100" max="1000000" value="10000" oninput="update()">
+            </div>
+
+            <div class="control-group">
+                <div class="control-label">
+                    <span>Galaxy age</span>
+                    <span class="control-value" id="v-age">13B years</span>
+                </div>
+                <input type="range" id="age" min="1" max="13" value="13" step="0.1" oninput="update()">
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="results">
+                <div class="result-item">
+                    <div class="result-label">Total civilizations ever</div>
+                    <div class="result-value cyan" id="r-total">0</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">With life (now)</div>
+                    <div class="result-value life" id="r-life">0</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Civilizations (now)</div>
+                    <div class="result-value civ" id="r-civs">0</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Avg distance between</div>
+                    <div class="result-value cyan" id="r-dist">—</div>
+                </div>
+            </div>
+
+            <div class="formula-section">
+                <div class="formula-text">
+                    <code>total</code> = stars × planets × life × intel<br>
+                    <code>concurrent</code> = total × (window / age)<br>
+                    <code>distance</code> = diameter / ∛concurrent
+                </div>
+            </div>
+        </div>
+
+        <div class="viz-container">
+            <canvas id="starfield"></canvas>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-dot star"></div>
+                    <span>Star system</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot life"></div>
+                    <span>Has life</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot civ"></div>
+                    <span>Civilization</span>
+                </div>
+            </div>
+            <div class="scale-info" id="scale-info">
+                1 dot = <span id="scale-value">100M</span> stars
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ============================================
+           CONSTANTS
+           ============================================ */
+        const C = {
+            galaxyStars: 200e9,
+            galaxyDiameter: 100000,
+            galaxyAge: 13e9,
+            displayDots: 3000
+        };
+
+
+        /* ============================================
+           LOGIC - Pure calculations
+           ============================================ */
+        function calculate(p) {
+            const planetsInHZ = C.galaxyStars * p.starsWithPlanets;
+            const withLife = planetsInHZ * p.lifeProbability;
+            const totalCivs = withLife * p.intelligenceProbability;
+            const concurrentCivs = totalCivs * (p.civWindow / p.galaxyAge);
+
+            const avgDistance = concurrentCivs > 0
+                ? C.galaxyDiameter / Math.pow(concurrentCivs, 1 / 3)
+                : Infinity;
+
+            return {
+                planetsInHZ,
+                withLife,
+                totalCivs,
+                concurrentCivs,
+                avgDistance,
+                // For display: how many dots of each type
+                starsPerDot: C.galaxyStars / C.displayDots,
+                lifeDots: Math.round(withLife / (C.galaxyStars / C.displayDots)),
+                civDots: Math.round(concurrentCivs / (C.galaxyStars / C.displayDots) * C.displayDots)
+            };
+        }
+
+
+        /* ============================================
+           RENDERING
+           ============================================ */
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+
+        function initStars() {
+            stars = [];
+            for (let i = 0; i < C.displayDots; i++) {
+                // Distribute in a rough spiral galaxy shape
+                const arm = Math.floor(Math.random() * 4);
+                const armAngle = (arm / 4) * Math.PI * 2;
+                const dist = Math.pow(Math.random(), 0.5) * 0.45;
+                const spread = (Math.random() - 0.5) * 0.3 * (1 - dist);
+                const angle = armAngle + dist * 3 + spread;
+
+                stars.push({
+                    x: 0.5 + Math.cos(angle) * dist,
+                    y: 0.5 + Math.sin(angle) * dist,
+                    size: Math.random() * 1.5 + 0.5,
+                    brightness: Math.random() * 0.5 + 0.2
+                });
+            }
+        }
+
+        function render(results) {
+            const w = canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+            const h = canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+            const width = canvas.offsetWidth;
+            const height = canvas.offsetHeight;
+
+            // Clear
+            ctx.fillStyle = '#050508';
+            ctx.fillRect(0, 0, width, height);
+
+            // Determine how many special dots
+            const lifeDots = Math.min(results.lifeDots, C.displayDots);
+            const civDots = Math.min(Math.max(Math.round(results.concurrentCivs), 0), 50);
+
+            // Shuffle indices for random selection
+            const indices = stars.map((_, i) => i);
+            for (let i = indices.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [indices[i], indices[j]] = [indices[j], indices[i]];
+            }
+
+            const lifeIndices = new Set(indices.slice(0, lifeDots));
+            const civIndices = new Set(indices.slice(0, civDots));
+
+            // Draw stars
+            stars.forEach((star, i) => {
+                const x = star.x * width;
+                const y = star.y * height;
+
+                if (civIndices.has(i)) {
+                    // Civilization - bright gold with glow
+                    ctx.beginPath();
+                    const gradient = ctx.createRadialGradient(x, y, 0, x, y, 12);
+                    gradient.addColorStop(0, 'rgba(255, 215, 0, 1)');
+                    gradient.addColorStop(0.3, 'rgba(255, 215, 0, 0.4)');
+                    gradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+                    ctx.fillStyle = gradient;
+                    ctx.arc(x, y, 12, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.fillStyle = '#ffd700';
+                    ctx.arc(x, y, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                } else if (lifeIndices.has(i)) {
+                    // Life - green with subtle glow
+                    ctx.beginPath();
+                    const gradient = ctx.createRadialGradient(x, y, 0, x, y, 6);
+                    gradient.addColorStop(0, 'rgba(57, 255, 20, 0.8)');
+                    gradient.addColorStop(1, 'rgba(57, 255, 20, 0)');
+                    ctx.fillStyle = gradient;
+                    ctx.arc(x, y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.fillStyle = '#39ff14';
+                    ctx.arc(x, y, 1.5, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    // Regular star
+                    ctx.beginPath();
+                    ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness * 0.4})`;
+                    ctx.arc(x, y, star.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+
+            // Add "us" marker in a fixed position
+            const usX = width * 0.62;
+            const usY = height * 0.48;
+
+            ctx.beginPath();
+            const usGradient = ctx.createRadialGradient(usX, usY, 0, usX, usY, 15);
+            usGradient.addColorStop(0, 'rgba(0, 240, 255, 1)');
+            usGradient.addColorStop(0.3, 'rgba(0, 240, 255, 0.3)');
+            usGradient.addColorStop(1, 'rgba(0, 240, 255, 0)');
+            ctx.fillStyle = usGradient;
+            ctx.arc(usX, usY, 15, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.fillStyle = '#00f0ff';
+            ctx.arc(usX, usY, 3, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.font = '10px "Space Mono", monospace';
+            ctx.fillStyle = 'rgba(0, 240, 255, 0.8)';
+            ctx.fillText('US', usX + 10, usY + 4);
+        }
+
+
+        /* ============================================
+           UI UPDATES
+           ============================================ */
+        function fmt(n) {
+            if (!isFinite(n)) return '∞';
+            if (n >= 1e9) return (n / 1e9).toFixed(1) + 'B';
+            if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+            if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
+            if (n >= 1) return n.toFixed(1);
+            if (n >= 0.01) return n.toFixed(2);
+            return n.toExponential(1);
+        }
+
+        function getParams() {
+            return {
+                starsWithPlanets: parseFloat(document.getElementById('stars').value) / 100,
+                lifeProbability: parseFloat(document.getElementById('life').value) / 100,
+                intelligenceProbability: parseFloat(document.getElementById('intel').value) / 100,
+                civWindow: parseFloat(document.getElementById('window').value),
+                galaxyAge: parseFloat(document.getElementById('age').value) * 1e9
+            };
+        }
+
+        function update() {
+            const p = getParams();
+            const r = calculate(p);
+
+            // Update labels
+            document.getElementById('v-stars').textContent = (p.starsWithPlanets * 100).toFixed(0) + '%';
+            document.getElementById('v-life').textContent = (p.lifeProbability * 100).toFixed(2) + '%';
+            document.getElementById('v-intel').textContent = (p.intelligenceProbability * 100).toFixed(3) + '%';
+            document.getElementById('v-window').textContent = fmt(p.civWindow) + ' yrs';
+            document.getElementById('v-age').textContent = (p.galaxyAge / 1e9).toFixed(1) + 'B yrs';
+
+            // Update results
+            document.getElementById('r-total').textContent = fmt(r.totalCivs);
+            document.getElementById('r-life').textContent = fmt(r.withLife);
+            document.getElementById('r-civs').textContent = fmt(r.concurrentCivs);
+            document.getElementById('r-dist').textContent = r.concurrentCivs > 0
+                ? fmt(r.avgDistance) + ' ly'
+                : '—';
+
+            // Update scale
+            document.getElementById('scale-value').textContent = fmt(r.starsPerDot);
+
+            // Render
+            render(r);
+        }
+
+        // Init
+        initStars();
+        update();
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            update();
+        });
+    </script>
+</body>
+
+</html>
