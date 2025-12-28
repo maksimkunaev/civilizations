@@ -466,13 +466,6 @@
     <div class="layout">
         <!-- LEFT: Controls -->
         <div class="panel">
-            <div class="panel-title">Scenario</div>
-            <div class="presets">
-                <button class="preset-btn" onclick="setPreset('pessimistic')">Pessimistic</button>
-                <button class="preset-btn active" onclick="setPreset('baseline')">Baseline</button>
-                <button class="preset-btn" onclick="setPreset('optimistic')">Optimistic</button>
-            </div>
-
             <div class="panel-title">Parameters</div>
 
             <div class="control-group">
@@ -535,6 +528,15 @@
                     <code>distance</code> = 100,000 ly / ∛concurrent<br>
                     <code>P(contact)</code> = signalRadius / distance
                 </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="panel-title">Scenario</div>
+            <div class="presets">
+                <button class="preset-btn" onclick="setPreset('pessimistic')">Pessimistic</button>
+                <button class="preset-btn active" onclick="setPreset('baseline')">Baseline</button>
+                <button class="preset-btn" onclick="setPreset('optimistic')">Optimistic</button>
             </div>
         </div>
 
