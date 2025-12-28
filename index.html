@@ -41,53 +41,84 @@
         }
 
         @media (max-width: 1200px) {
+            body {
+                overflow-y: auto;
+            }
+
             .layout {
                 grid-template-columns: 1fr;
                 grid-template-rows: auto 1fr auto;
-                height: 100vh;
+                height: auto;
+                min-height: 100vh;
             }
 
             .panel {
-                max-height: 20vh;
-                overflow-y: auto;
-                padding: 12px;
+                max-height: none;
+                overflow-y: visible;
+                padding: 16px;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             }
 
             .verdict-panel {
-                max-height: 25vh;
-                overflow-y: auto;
-                padding: 12px;
+                max-height: none;
+                overflow-y: visible;
+                padding: 16px;
+                border-left: none;
+                border-top: 1px solid rgba(255, 255, 255, 0.05);
             }
 
             .viz-container {
-                height: auto;
-                min-height: 55vh;
+                height: 60vh;
+                min-height: 400px;
             }
 
             .presets {
-                margin-bottom: 10px;
+                margin-bottom: 12px;
             }
 
             .control-group {
-                margin-bottom: 8px;
-            }
-
-            .stats-grid {
-                gap: 6px;
                 margin-bottom: 10px;
             }
 
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+                margin-bottom: 12px;
+            }
+
             .stat-card {
-                padding: 8px;
+                padding: 10px;
             }
 
             .verdict-box {
-                padding: 12px;
+                padding: 14px;
+            }
+
+            .verdict-main {
+                font-size: 2rem;
             }
 
             .panel-title {
-                margin-bottom: 8px;
+                margin-bottom: 10px;
+                font-size: 0.7rem;
+            }
+
+            .legend {
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+                flex-wrap: wrap;
                 font-size: 0.65rem;
+                padding: 8px 10px;
+            }
+
+            .scale-info {
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                font-size: 0.65rem;
+                padding: 8px 10px;
             }
         }
 
@@ -534,6 +565,29 @@
         <div class="verdict-panel">
             <div class="panel-title" style="margin-bottom: 10px;">Calculation Breakdown</div>
 
+            <div class="verdict-box civs">
+                <div class="verdict-label">Estimated Civilizations Right Now</div>
+                <div class="verdict-main civs" id="r-civs">0</div>
+                <div class="verdict-sub">that could exist in our galaxy today</div>
+                <div class="verdict-detail">
+                    Distance to nearest: <strong id="r-dist2">—</strong><br>
+                    Signal travel time: <strong id="r-signal">—</strong>
+                </div>
+            </div>
+
+            <div class="verdict-box probability">
+                <div class="verdict-label">Probability of Contact</div>
+                <div class="verdict-main probability" id="r-prob">0%</div>
+                <div class="verdict-sub">chance of detecting them in next 100 years</div>
+                <div class="verdict-detail" id="r-prob-desc">
+                    Our radio signals have traveled ~100 light years since 1920s.
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="panel-title" style="margin-bottom: 10px;">Calculation Breakdown</div>
+
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-label">Planets in Habitable Zone</div>
@@ -554,27 +608,6 @@
                     <div class="stat-label">Temporal Overlap Chance</div>
                     <div class="stat-value" id="s-overlap">0%</div>
                     <div class="stat-desc">Probability civilizations exist at same time</div>
-                </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="verdict-box civs">
-                <div class="verdict-label">Estimated Civilizations Right Now</div>
-                <div class="verdict-main civs" id="r-civs">0</div>
-                <div class="verdict-sub">that could exist in our galaxy today</div>
-                <div class="verdict-detail">
-                    Distance to nearest: <strong id="r-dist2">—</strong><br>
-                    Signal travel time: <strong id="r-signal">—</strong>
-                </div>
-            </div>
-
-            <div class="verdict-box probability">
-                <div class="verdict-label">Probability of Contact</div>
-                <div class="verdict-main probability" id="r-prob">0%</div>
-                <div class="verdict-sub">chance of detecting them in next 100 years</div>
-                <div class="verdict-detail" id="r-prob-desc">
-                    Our radio signals have traveled ~100 light years since 1920s.
                 </div>
             </div>
 
