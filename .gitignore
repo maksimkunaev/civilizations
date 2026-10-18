@@ -1,2 +1,4 @@
 .DS_Store
 lib.es5.d.ts
+.env
+node_modules/
